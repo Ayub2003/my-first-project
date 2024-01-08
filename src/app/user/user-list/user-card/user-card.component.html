@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card__info">
+    <p>{{ user.id }}</p>
+    <p>name: {{ user.name }}</p>
+    <p>username: {{ user.username }}</p>
+    <p>email: {{ user.email }}</p>
+    <div class="details" *ngIf="details">
+      <p>contact: {{ user.phone }}</p>
+      <p>company: {{ user.company.name }}</p>
+      <p>website: {{ user.website }}</p>
+    </div>
+    <button class="details-button" (click)="toggleDetails()">
+      {{ details ? "hide details" : "show details" }}
+    </button>
+  </div>
+  <div class="actions">
+    <button mat-button (click)="onDelete()">DELETE</button>
+    <button mat-button (click)="onEdit()">Edit</button>
+  </div>
+</div>
