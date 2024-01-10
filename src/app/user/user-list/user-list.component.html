@@ -1,14 +1,14 @@
 <div class="user-list">
-  <p *ngIf="error">error</p>
-  <p *ngIf="loading">loading...</p>
+  <p *ngIf="userService.error">error</p>
+  <p *ngIf="userService.loading">loading...</p>
   <button mat-raised-button class="add-user-button" (click)="openDialog()">
     Add user
   </button>
 
   <app-user-card
-    *ngFor="let user of users"
+    *ngFor="let user of userService.users"
     [user]="user"
-    (delete)="deleteUser(user.id)"
+    (delete)="userService.deleteUser(user.id)"
     (edit)="openDialogEditUser($event)"
   ></app-user-card>
 </div>

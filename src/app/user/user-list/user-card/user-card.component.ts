@@ -19,7 +19,7 @@ export class UserCardComponent {
   @Output() edit = new EventEmitter<IUser>();
   public details: boolean = false;
 
-  constructor(private dialog: MatDialog) {}
+  constructor() {}
 
   onDelete(): void {
     this.delete.emit();
