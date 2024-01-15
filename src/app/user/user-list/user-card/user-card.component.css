@@ -5,8 +5,7 @@
   font: 1rem "Fira Sans", sans-serif;
   font-weight: 600;
   justify-content: space-between;
-  background-color: rgb(200, 239, 123);
-  color: rgb(89, 100, 40);
+  background-color: #f0f0f5;
   padding: 10px;
   padding-left: 10%;
   margin-top: 20px;
@@ -16,6 +15,7 @@
   -webkit-box-shadow: 5px 7px 16px -15px rgba(34, 60, 80, 0.63);
   -moz-box-shadow: 5px 7px 16px -15px rgba(34, 60, 80, 0.63);
   box-shadow: 5px 7px 16px -15px rgba(34, 60, 80, 0.63);
+
 }
 
 .details {
@@ -24,10 +24,11 @@
 }
 
 .details-button {
-  background-color: rgb(81, 180, 80);
+  background-color: #4242de;
   border: 0;
   border-radius: 5px;
   color: white;
+  padding: 0.5rem;
 }
 
 .actions {

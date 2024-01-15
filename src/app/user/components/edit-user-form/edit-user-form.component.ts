@@ -45,7 +45,7 @@ export class EditUserFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: {user: IUser},
     public dialogRef: MatDialogRef<EditUserFormComponent>,
     public userService: UserService
   ) {}
@@ -56,6 +56,12 @@ export class EditUserFormComponent {
       username: ['', Validators.required],
       email: ['', [Validators.required]],
     });
+
+    this.form.patchValue({
+      name: this.data.user.name,
+      username: this.data.user.username,
+      email:this.data.user.email
+    })
   }
 
   onSubmit() {
@@ -63,13 +69,6 @@ export class EditUserFormComponent {
       const updatedUser = { ...this.data.user, ...this.form.value };
       this.dialogRef.close(updatedUser);
     }
-
-    this.dialogRef.afterClosed().subscribe((result: IUser) => {
-      console.log('EditData', result);
-      if (result !== undefined) this.userService.editUser(result);
-
-      console.log(result);
-    });
   }
 
   onNoClick(): void {

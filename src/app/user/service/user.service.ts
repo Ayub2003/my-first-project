@@ -9,7 +9,7 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  public users: IUser[] | null = null;
+  public users: IUser[] | undefined;
   public error?: HttpErrorResponse | undefined;
   public loading!: boolean;
 
@@ -21,7 +21,7 @@ export class UserService {
   public loadUsers(): void {
     this.loading = true;
     if (!this.users) {
-      if (this.userLocaleStorageService.getUsers() === null) {
+      if (!this.userLocaleStorageService.getUsers()) {
         this.userAPIService
           .getUsers()
           .pipe(tap(() => (this.loading = false)))
@@ -55,23 +55,24 @@ export class UserService {
     this.userAPIService.addUser(user).subscribe({
       next: (data: { id: number }) => {
         user = { ...user, id: data.id };
-        if (this.users !== null) this.users = [user, ...this.users];
+        if (this.users) this.users = [user, ...this.users];
         this.userLocaleStorageService.addUser(user);
       },
     });
   }
 
   public editUser(editedUser: IUser): void {
-    console.log('[editUser method of UserService]', editedUser);
+    console.log('[editUser] editedUser', editedUser);
     this.userAPIService.editUser(editedUser).subscribe({
       next: () => {
-        let updatedUsers = this.users!.map((user) => {
-          if (editedUser.id === user.id) return { ...user, ...editedUser };
-          else return user;
-        });
-        console.log('[editUser] updated users]', updatedUsers);
-        this.users = updatedUsers;
-      },
+        if(this.users){
+          console.log('[editUser] this.user is not undefined')
+          this.users = this.users.map((user: IUser) => {
+            if (editedUser.id === user.id) return { ...user, ...editedUser };
+            else return user;
+          });
+          this.userLocaleStorageService.editUser(editedUser)
+      } else console.log('[editUser] this.users is undefined', this.users)}
     });
   }
 }

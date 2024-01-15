@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { IUser } from '../models/users.model';
+import {Injectable} from '@angular/core';
+import {IUser} from '../models/users.model';
 
 @Injectable({
   providedIn: 'root',
@@ -7,13 +7,10 @@ import { IUser } from '../models/users.model';
 export class UserLocaleStorageService {
   constructor() {}
 
-  getUsers(): IUser[] | null {
+  getUsers(): IUser[] | undefined {
     const users = localStorage.getItem('users');
-    if (typeof users === 'string') {
-      const parse: IUser[] = JSON.parse(users);
-      return parse;
-    }
-    return null;
+    if (typeof users === 'string') return JSON.parse(users)
+    else return undefined;
   }
 
   setUsers(users: IUser[]): void {
@@ -36,8 +33,19 @@ export class UserLocaleStorageService {
     const users = localStorage.getItem('users');
     if (typeof users === 'string') {
       let parsedUsers: IUser[] = JSON.parse(users);
-      parsedUsers.unshift(user);
+      parsedUsers= [user,...parsedUsers];
       localStorage.setItem('users', JSON.stringify(parsedUsers));
+    }
+  }
+
+  editUser(updatedData: Partial<IUser>): void{
+    const users = localStorage.getItem('users');
+    if (typeof users === 'string') {
+      const updatedUsers:IUser[] = JSON.parse(users).map((user:IUser)=>{
+        if(user.id === updatedData.id) return {...user, ...updatedData}
+        else return user
+      })
+      localStorage.setItem('users', JSON.stringify(updatedUsers))
     }
   }
 

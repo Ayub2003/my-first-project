@@ -1,7 +1,7 @@
 <div class="user-list">
   <p *ngIf="userService.error">error</p>
-  <p *ngIf="userService.loading">loading...</p>
-  <button mat-raised-button class="add-user-button" (click)="openDialog()">
+  <mat-progress-bar *ngIf="userService.loading" mode="indeterminate"></mat-progress-bar>
+  <button mat-raised-button class="add-user-button" (click)="openDialogAddUser()">
     Add user
   </button>
 

@@ -22,7 +22,8 @@ export class UserAPIService {
     return this.http.post<{ id: number }>(this.url + '/users', user);
   }
 
-  public editUser(user: Partial<IUser>): Observable<IUser> {
-    return this.http.patch<IUser>(this.url + '/users', user);
+  public editUser(user: IUser): Observable<IUser> {
+    // console.log('[UserAPIService] editUser(): ',user)
+    return this.http.patch<IUser>(this.url + `/users/${user.id}`, user);
   }
 }

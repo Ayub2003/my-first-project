@@ -1,5 +1,5 @@
-<h2>My Modal</h2>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="dialog" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Edit user</h2>
   <mat-form-field>
     <input matInput formControlName="name" placeholder="Name" />
   </mat-form-field>
@@ -9,7 +9,9 @@
   <mat-form-field>
     <input matInput formControlName="email" placeholder="Email" />
   </mat-form-field>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+  <div>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Edit</button>
+  </div>
 
-  <button mat-raised-button color="primary" type="submit">Edit</button>
 </form>
