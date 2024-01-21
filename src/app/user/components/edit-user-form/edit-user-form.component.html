@@ -11,7 +11,13 @@
   </mat-form-field>
   <div>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Edit</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      Edit
+    </button>
   </div>
-
 </form>

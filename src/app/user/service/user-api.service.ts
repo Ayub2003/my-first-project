@@ -11,7 +11,7 @@ export class UserAPIService {
   constructor(private http: HttpClient, @Inject(API_URL) private url: string) {}
 
   public getUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.url + '/users').pipe(delay(200));
+    return this.http.get<IUser[]>(this.url + '/users');
   }
 
   public deleteUser(id: number): Observable<unknown> {
@@ -22,7 +22,7 @@ export class UserAPIService {
     return this.http.post<{ id: number }>(this.url + '/users', user);
   }
 
-  public editUser(user: IUser): Observable<IUser> {
+  public editUser(user: Partial<IUser>): Observable<IUser> {
     // console.log('[UserAPIService] editUser(): ',user)
     return this.http.patch<IUser>(this.url + `/users/${user.id}`, user);
   }

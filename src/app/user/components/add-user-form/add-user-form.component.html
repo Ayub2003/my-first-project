@@ -1,6 +1,5 @@
 <form class="dialog" [formGroup]="form" (ngSubmit)="onSubmit()">
   <h2>Create user</h2>
-
   <mat-form-field>
     <input matInput formControlName="name" placeholder="Name" />
   </mat-form-field>
@@ -11,6 +10,14 @@
     <input matInput formControlName="email" placeholder="Email" />
   </mat-form-field>
   <div>
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Create</button></div>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      Create
+    </button>
+  </div>
 </form>

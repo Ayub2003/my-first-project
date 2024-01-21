@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -38,16 +38,14 @@ import { UserService } from '../../service/user.service';
   ],
   templateUrl: './edit-user-form.component.html',
   styleUrl: './edit-user-form.component.css',
-  providers: [UserService],
 })
 export class EditUserFormComponent {
   public form!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: {user: IUser},
-    public dialogRef: MatDialogRef<EditUserFormComponent>,
-    public userService: UserService
+    @Inject(MAT_DIALOG_DATA) public data: { user: IUser },
+    public dialogRef: MatDialogRef<EditUserFormComponent>
   ) {}
 
   ngOnInit() {
@@ -60,8 +58,8 @@ export class EditUserFormComponent {
     this.form.patchValue({
       name: this.data.user.name,
       username: this.data.user.username,
-      email:this.data.user.email
-    })
+      email: this.data.user.email,
+    });
   }
 
   onSubmit() {
@@ -69,9 +67,5 @@ export class EditUserFormComponent {
       const updatedUser = { ...this.data.user, ...this.form.value };
       this.dialogRef.close(updatedUser);
     }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

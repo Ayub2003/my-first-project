@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -13,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { IUser } from '../../models/users.model';
 
 @Component({
   selector: 'app-add-user-form',
@@ -32,17 +38,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './add-user-form.component.html',
   styleUrl: './add-user-form.component.css',
 })
-export class AddUserFormComponent implements OnInit{
-  @Input() public title?: string;
-  public form!: FormGroup
+export class AddUserFormComponent implements OnInit {
+  public form!: FormGroup;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUserFormComponent>,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      id: [new Date().getTime()],
       name: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required]],
@@ -50,13 +55,6 @@ export class AddUserFormComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
-      console.log(this.form.value)
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+    if (this.form.valid) this.dialogRef.close(this.form.value);
   }
 }
