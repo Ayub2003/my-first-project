@@ -21,3 +21,8 @@ export interface IUser {
     bs: string;
   };
 }
+
+export enum ModalType {
+  isCreate = 'isCreate',
+  isEdit = 'isEdit',
+}

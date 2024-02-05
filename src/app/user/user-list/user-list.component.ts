@@ -3,7 +3,7 @@ import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { UserCardComponent } from './user-card/user-card.component';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { UserAPIService } from '../service/user-api.service';
-import { IUser } from '../models/users.model';
+import { IUser, ModalType } from '../models/users.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { AddUserFormComponent } from '../components/add-user-form/add-user-form.component';
@@ -11,6 +11,8 @@ import { EditUserFormComponent } from '../components/edit-user-form/edit-user-fo
 import { UserService } from '../service/user.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UsersFacade } from '../state/users.facade';
+import { UserFormService } from '../service/user-form.service';
+import { UserModalComponent } from '../components/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-user-list',
@@ -54,8 +56,26 @@ export class UserListComponent implements OnInit {
       data: { user: { ...user } },
     });
 
-    dialogRef.afterClosed().subscribe((result: IUser) => {
-      if (result !== undefined) this.userFacade.updateUser(result);
+    dialogRef.afterClosed().subscribe((result: IUser | undefined) => {
+      if (result) this.userFacade.updateUser(result);
+    });
+  }
+
+  public openCreateUserModal() {
+    const diaologRef = this.dialog.open(UserModalComponent, {
+      data: { modalType: ModalType.isCreate },
+    });
+
+    diaologRef
+      .afterClosed()
+      .subscribe(
+        (user: IUser | undefined) => user && this.userFacade.addUser(user)
+      );
+  }
+
+  public openEditUserModal(user: IUser) {
+    const dialogRef = this.dialog.open(UserModalComponent, {
+      data: { modalType: ModalType.isEdit, user: { ...user } },
     });
   }
 }

@@ -52,7 +52,15 @@ export class EditUserFormComponent {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
-      email: ['', [Validators.required]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.maxLength(50),
+          Validators.minLength(5),
+        ],
+      ],
     });
 
     this.form.patchValue({

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { API_URL } from '../../app.config';
 import { IUser } from '../models/users.model';
-import { Observable, delay } from 'rxjs';
+import { Observable, delay, share } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
