@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { UserCardComponent } from './user-card/user-card.component';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { UserAPIService } from '../service/user-api.service';
 import { IUser, ModalType } from '../models/users.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UsersFacade } from '../state/users.facade';
 import { UserFormService } from '../service/user-form.service';
 import { UserModalComponent } from '../components/user-modal/user-modal.component';
+import { LinkedList } from '../../utils/linkedList/createLinkedList';
 
 @Component({
   selector: 'app-user-list',
@@ -41,6 +41,53 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userFacade.loadUsers();
+
+    const linkedList: LinkedList<number> = new LinkedList<number>(
+      5,
+      true,
+      [1, 2, 3, 4, 5]
+    );
+
+    linkedList.push(6);
+    linkedList.fill(null);
+
+    interface Person {
+      name: string;
+      age: number;
+    }
+
+    type DeleteKey<T, U extends string> = {
+      [K in keyof T as K extends U ? never : `super${string & K}`]: T[K];
+    };
+
+    type Pick<T, U> = {
+      [K in keyof T as K extends U ? K : never]: T[K];
+    };
+
+    type Omit<T, U> = {
+      [K in keyof T as K extends U ? never : K]: T[K];
+    };
+
+    type HigherString<T> = {
+      [K in keyof T as K extends `${infer S}` ? `${Uppercase<S>}` : K]: T[K];
+    };
+
+    let hello: DeleteKey<Person, 'name'> = {
+      superage: 12,
+    };
+
+    let pickObj: Pick<Person, 'age'> = {
+      age: 12,
+    };
+
+    let omitObj: Omit<Person, 'age'> = {
+      name: 'jede',
+    };
+
+    let higherString: HigherString<Person> = {
+      NAME: 's',
+      AGE: 12,
+    };
   }
 
   public openDialogAddUser() {

@@ -15,7 +15,7 @@ export class UserAPIService {
   }
 
   public deleteUser(id: number): Observable<unknown> {
-    return this.http.delete(this.url + `/users/${id}`);
+    return this.http.delete(this.url + `/userhs/${id}`);
   }
 
   public addUser(user: IUser): Observable<{ id: number }> {

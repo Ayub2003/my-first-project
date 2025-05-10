@@ -10,6 +10,12 @@ export const routes: Routes = [
         (c) => c.UserListComponent
       ),
   },
+  {
+    path: 'test',
+    loadComponent: () => import('./testing/testing.component').then(
+      c => c.TestingComponent
+    )
+  }
 ];
 
 @NgModule({
